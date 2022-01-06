@@ -159,6 +159,20 @@ Stateful Set通常给数据库设置，因为数据库切换时需要数据同�
 
 ### Minikube and Kubectl - Local Setup（实战）
 
+- What is minikube ?
+- what is kubectl ?
+- Set-up Minikube cluster 
+
+
+
+![image-20220106224605966](/home/hjw/.config/Typora/typora-user-images/image-20220106224605966.png)
+
+
+
+![image-20220106230618356](/home/hjw/.config/Typora/typora-user-images/image-20220106230618356.png)
+
+
+
 
 
 
