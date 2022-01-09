@@ -171,9 +171,68 @@ Stateful Set通常给数据库设置，因为数据库切换时需要数据同�
 
 ![image-20220106230618356](/home/hjw/.config/Typora/typora-user-images/image-20220106230618356.png)
 
+- `kubectl version` 
+
+```
+Client Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.3", GitCommit:"c92036820499fedefec0f847e2054d824aea6cd1", GitTreeState:"clean", BuildDate:"2021-10-27T18:41:28Z", GoVersion:"go1.16.9", Compiler:"gc", Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"22", GitVersion:"v1.22.3", GitCommit:"c92036820499fedefec0f847e2054d824aea6cd1", GitTreeState:"clean", BuildDate:"2021-10-27T18:35:25Z", GoVersion:"go1.16.9", Compiler:"gc", Platform:"linux/amd64"}
+```
+
+- `kubectl get nodes`
+
+```
+NAME       STATUS   ROLES                  AGE   VERSION
+minikube   Ready    control-plane,master   27h   v1.22.3
+```
+
+- `kubectl get services`
+
+```
+NAME             TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
+hello-minikube   NodePort    10.98.36.71   <none>        8080:31278/TCP   24h
+kubernetes       ClusterIP   10.96.0.1     <none>        443/TCP          27h
+```
+
+![image-20220109225948867](/home/hjw/.config/Typora/typora-user-images/image-20220109225948867.png)
+
+- `kubectl create deployment nginx-depl --image=nginx`
+
+根据镜像创建deployment
+
+- `kubectl get deployment`
+
+获取deployment
+
+- `kubectl get pod`
+
+获取pod
+
+- `kubectl get replicaset`
+
+<span style=color:red>Replicaset is managing the replicas of Pod</span>
+
+- `kubectl edit deployment nginx-depl`
+
+修改deployment信息，如修改部署服务所用镜像版本信息
+
+- `kubectl get replicaset`
+
+获取副本
+
+```
+NAME                        DESIRED   CURRENT   READY   AGE
+hello-minikube-6ddfcc9757   1         1         0       24h
+nginx-depl-5c8bf76b5b       0         0         0       22m
+nginx-depl-7fc44fc5d4       1         1         1       4m51s   
+# 由于kubectl edit deployment nginx-depl，修改了镜像版本，所以老容器停止，用新容器nginx-depl-7fc44fc5d4 
+```
 
 
 
+<span style=color:red>**Debuging Pod**</span>
+
+- `kubectl logs [pod name]`
+- `kubectl describe pod [pod name]` 获取pod工作状态信息
 
 
 
@@ -202,3 +261,16 @@ Stateful Set通常给数据库设置，因为数据库切换时需要数据同�
 ### K8s StatefulSet - Deploying Stateful Apps
 
 ### K8s Serivces
+
+
+
+
+
+### MiniKube安装
+
+[官方安装教程](https://minikube.sigs.k8s.io/docs/start/)
+
+问题记录：`[ERROR ImagePull]: failed to pull image k8s.gcr.io/kube-apiserver:v1.22.2: output: Error response from daemon: Get https://k8s.gcr.io/v2/: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)`
+
+解决方法：`minikube start`，修改为：`minikube start --image-mirror-country='cn' --image-repository='registry.cn-hangzhou.aliyuncs.com/google_containers'`
+
